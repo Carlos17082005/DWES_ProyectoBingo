@@ -54,12 +54,34 @@
             }
 
             // Asignar numeros aleatorios en esas posiciones
-            foreach ($posiciones as $pos){
+            foreach ($posiciones as $columna){
                 do{
-                    $num = rand(1,60);
+                    // Asignar números según la columna
+                    switch($columna){
+                        case 0:
+                            $num = rand(1,9);
+                            break;
+                        case 1:
+                            $num = rand(10,19);
+                            break;
+                        case 2:
+                            $num = rand(19,29);
+                            break;
+                        case 3:
+                            $num = rand(30,39);
+                            break;
+                        case 4:
+                            $num = rand(40,49);
+                            break;
+                        case 5:
+                            $num = rand(50,59);
+                            break;
+                        case 6:
+                            $num = 60;
+                            break;
                 } while (in_array($num, $numerosUsados)); // Para que no se repita
 
-                $fila[$pos] = $num;
+                $fila[$columna] = $num;
                 $numerosUsados[] = $num;
             }
 
