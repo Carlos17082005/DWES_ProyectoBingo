@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo</title>
+    <title>Bingo (prototipo)</title>
     <style>
         h1  {
             text-align: center;
@@ -13,7 +13,6 @@
         .jugador  {
             width: 24%;
             margin: 1px;
-            border: 1px red solid;
             float: left;
         }
         .marcado {
@@ -60,7 +59,7 @@
 
 
     ?>
-    <h1>Bingo</h1>
+    <h1>Bingo (prototipo)</h1>
     <div class="jugador" id="j1"><p>Jugador 1</p>
         <?php
         //jugador, y los 3 cartones
