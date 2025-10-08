@@ -40,9 +40,6 @@
         if (!isset($_SESSION['jugadores'])) {  //recupera el array $jugadores que contiene todos los datos de los jugadores
             $_SESSION['jugadores'] = array(
                 'jugador1' => cartasJugador(),
-                'jugador2' => cartasJugador(),
-                'jugador3' => cartasJugador(),
-                'jugador4' => cartasJugador()
             );
         }
 
@@ -72,9 +69,6 @@
             }
         ?>
     </div>
-    <div class="jugador" id="j2"><p>Jugador 2</p></div>
-    <div class="jugador" id="j3"><p>Jugador 3</p></div>
-    <div class="jugador" id="j4"><p>Jugador 4</p></div>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <button type="submit" name="sacarBola">Sacar Bola</button>

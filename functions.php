@@ -1,22 +1,39 @@
 <?php
-    function imprimirCarton()  { //imprme el carton en forma de tabla
+    function imprimirCarton($carton, $marcar)  { //imprme el carton en forma de tabla
         echo "<table>";
-        $a=carta();
-        foreach ($a as $fila) {
+        foreach ($carton as $fila) {
             echo "<tr>"; 
             foreach ($fila as $valor) {
-                echo "<td>".$valor."</td>"; 
+                if (in_array($valor, $marcar))  {
+                    echo '<td class="marcado">'.$valor.'</td>'; 
+                } 
+                else  {
+                    echo '<td>'.$valor.'</td>'; 
+                }
             }
             echo "</tr>"; 
         }
         echo "</table>";
     }
-    
-    $bolas=array(); //array que guarda todas las bolas que van saliendo
-    function sacarBola()  { //saca un numero aleatorio del 1 al 60
+        
+    function sacarBola($bolas)  { //saca un numero aleatorio del 1 al 60
         $bola=(int)rand(1,60);
-        echo '<p style="color: red;">'.$bola.'</p>';
-        return $bola;
+        $bool = false;
+
+        while (!$bool)  {
+            $bool = true;
+            foreach($bolas as $num)  {
+                if ($num == $bola)  {
+                    $bool = false;
+                }
+            }
+            if ($bool)  {
+                return $bola;
+            }
+            else  {
+                $bola=(int)rand(1,60);
+            }
+        }
     }
 
     function carta()
