@@ -19,6 +19,10 @@
             background-color: red;
             font-weight: bold;
         }
+        .ganado {
+            background-color: green;
+            font-weight: bold;
+        }
         table  {
             border: solid 1px;
             border-collapse: collapse;
@@ -37,8 +41,7 @@
             $_SESSION['bolas'] = array();
         }
         if (!isset($_SESSION['jugadores'])) {  //recupera el array $jugadores que contiene todos los datos de los jugadores
-            $_SESSION['jugadores'] = array(
-                'jugador1' => cartasJugador(),
+            $_SESSION['jugadores'] = array('jugador1' => cartasJugador(),
             );
         }
 
@@ -54,6 +57,7 @@
 
             if (isset($_POST['reiniciar'])) {
                 $_SESSION['bolas'] = array(); //vacía el array para reiniciar la pagina
+                $_SESSION['jugadores'] = array('jugador1' => cartasJugador());
             }
         }
 

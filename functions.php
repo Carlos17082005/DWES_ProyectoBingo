@@ -1,41 +1,59 @@
 <?php
-    function imprimirCarton($carton, $marcar)  { //imprme el carton en forma de tabla
-        echo "<table>";
+    function imprimirCarton($carton, $marcar)  { //imprme el carton en forma de tabla (estetico)
+        $ganador = 0;  //contabilisa las casillas marcadas
+        $text = "<table>";
         foreach ($carton as $fila) {
-            echo "<tr>"; 
+            $text .=  "<tr>"; 
             foreach ($fila as $valor) {
-                if (in_array($valor, $marcar))  {
-                    echo '<td class="marcado">'.$valor.'</td>'; 
+                if (in_array($valor, $marcar))  {  //si detecta que el numero ya salio, marca la casilla
+                    $text .= '<td class="marcado">'.$valor.'</td>'; 
+                    $ganador++;
                 } 
                 else  {
-                    echo '<td>'.$valor.'</td>'; 
+                    $text .= '<td>'.$valor.'</td>';   //si el numero no ha salido, no la marca
                 }
             }
-            echo "</tr>"; 
+            $text .= "</tr>"; 
         }
-        echo "</table><br>";
+        if ($ganador == 15)  {  //si el carton esta completo (15/15) lo marca todo
+            $text = "<table>";
+            foreach ($carton as $fila) {
+                $text .=  "<tr>"; 
+                foreach ($fila as $valor) {
+                    $text .= '<td class="ganado">'.$valor.'</td>'; 
+                }
+            } 
+        }
+        $text .= "</table><br>";
+        echo $text;
     }
-        
-    function sacarBola($bolas)  { //saca un numero aleatorio del 1 al 60
-        $bola=(int)rand(1,60);
-        $bool = false;
 
-        while (!$bool)  {
-            $bool = true;
-            foreach($bolas as $num)  {
-                if ($num == $bola)  {
-                    $bool = false;
+    function ganador($jugador, $bolas)  { //comprueba si el carton es ganador
+        foreach ($jugador as $carton)  {
+            $ganador = 0;
+            foreach ($carton as $fila) {
+                foreach ($fila as $valor) {
+                    if (in_array($valor, $bolas))  {
+                        $ganador++;
+                    } 
                 }
             }
-            if ($bool)  {
+            if ($ganador == 15)  {  //si el carton esta completo (15/15) devuelve un true para acabar
+                return true;
+            }
+        }
+        return false;  //si esta incompleto devuelve false para que añada otro numero
+    }
+
+    function sacarBola($bolas)  {  //saca un numero (bola) aleatorio del 1 al 60
+        $bola=(int)rand(1,60);
+        while (TRUE)  {
+            if (!in_array($bola, $bolas))  {  //si la bola no a salido, devuelve la bola y sale de la funcion 
                 return $bola;
             }
-            else  {
-                $bola=(int)rand(1,60);
-            }
+            $bola=(int)rand(1,60);
         }
     }
-
 
     function carta() //temporal
     {
@@ -128,11 +146,9 @@
     }
     */
     
-    function cartasJugador()
-    {
+    function cartasJugador()  {
         $cartas = array();
-        for($i=0; $i < 3;$i++)
-        {
+        for($i=0; $i < 3;$i++)  {
             $cartas[] = carta();
         }
         return $cartas;
