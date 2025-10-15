@@ -20,21 +20,9 @@
         }
         .jugador  {
             width: 24%;
-            margin: 1px;
+            margin: 2px;
             border: 5px solid;
             float: left;
-        }
-        #j1 {
-            border-color: red;
-        }
-        #j2 {
-            border-color: green;
-        }
-        #j3 {
-            border-color: blue;
-        }
-        #j4 {
-            border-color: purple;
         }
         .marcado {
             background-color: red;
@@ -74,69 +62,45 @@
 
     <div>
         <?php 
-            include 'functions.php'; //permite usar funciones de otro fichero PHP
-            $bolas = array();  //crea el array que va a guardar las bolas que vayan saliendo
+            include 'functions.php'; // Permite usar funciones de otro fichero PHP
+            $bolas = array();  // Crea el array que va a guardar las bolas que vayan saliendo
 
-            $jugadores = array(  //crea un array asosiativo que guarda los cartones de todos los jugadores
-                'jugador1' => cartasJugador(),
-                'jugador2' => cartasJugador(),
-                'jugador3' => cartasJugador(),
-                'jugador4' => cartasJugador()
+            $jugadores = array(  // Crea un array asosiativo que guarda los cartones de todos los jugadores
+                'Jugador 1' => cartonesJugador(),
+                'Jugador 2' => cartonesJugador(),
+                'Jugador 3' => cartonesJugador(),
+                'Jugador 4' => cartonesJugador()
             );
 
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {  //se ejecuta al pulsar el boton
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {  // Se ejecuta al pulsar el boton
                 $bool = false;
-                while(!$bool)  {  //ejecuta el bucle hasta que haya un ganador, cuando detecta un ganador lo imprime y verifica los otros por si hay otro ganador
-                    if (ganador($jugadores['jugador1'], $bolas))  {
-                        echo "<h2>Ganador Jugador 1</h2>";
-                        $bool = true;
+                $text = "Ganador: ";  //Aqui se guardara la informacion del ganador
+                while(!$bool)  {  // Ejecuta el bucle hasta que haya un ganador, cuando detecta un ganador lo imprime y verifica los otros por si hay otro ganador
+                    foreach($jugadores as $claveJ => $jugador)  {
+                        foreach($jugador as $claveC => $carton)  {
+                            if (ganador($carton, $bolas))  {  // Guarda la informacion del ganador usando las claves de los arrays asosiativos
+                                $text .= "<br>&ensp;&ensp;&ensp;&ensp;&ensp; - ".$claveJ." con el ".$claveC;
+                                $bool = true;  // Para salir del bucle y no sacar mas bolas
+                            }
+                        }
                     }
-                    if (ganador($jugadores['jugador2'], $bolas))  {
-                        echo "<h2>Ganador Jugador 2</h2>";
-                        $bool = true;
-                    }
-                    if (ganador($jugadores['jugador3'], $bolas))  {
-                        echo "<h2>Ganador Jugador 3</h2>";
-                        $bool = true;
-                    }
-                    if (ganador($jugadores['jugador4'], $bolas))  {
-                        echo "<h2>Ganador Jugador 4</h2>";
-                        $bool = true;
-                    }
-                    if (!$bool)  {  //si no hay jugador saca otra bola
+                    if (!$bool)  {  // Si no hay carton ganador saca otra bola
                         array_push($bolas, sacarBola($bolas));
                     }
                 }
+                echo "<h2>".$text."</h2>";  // Imprime el ganador
             }
 
-            //imprime los cartones de los jugadores (estetico)
-
-            echo '<div class="jugador" id="j1"><p>Jugador 1</p>';
-            foreach ($jugadores['jugador1'] as $carton)  {
-                imprimirCarton($carton, $bolas);
+            // Imprime los cartones de los jugadores 
+            foreach($jugadores as $claveJ => $jugador)  {
+                    echo '<div class="jugador"><p>'.$claveJ.'</p>';
+                    foreach($jugador as $carton)  {
+                        imprimirCarton($carton, $bolas);
+                    }
+                    echo '</div>';
             }
-            echo '</div>';
-            
-            echo '<div class="jugador" id="j2"><p>Jugador 2</p>';
-                    foreach ($jugadores['jugador2'] as $carton)  {
-                        imprimirCarton($carton, $bolas);
-                    }                
-            echo '</div>';
 
-            echo '<div class="jugador" id="j3"><p>Jugador 3</p>';
-                    foreach ($jugadores['jugador3'] as $carton)  {
-                        imprimirCarton($carton, $bolas);
-                    }
-            echo '</div>';
-
-            echo '<div class="jugador" id="j4"><p>Jugador 4</p>';
-                    foreach ($jugadores['jugador4'] as $carton)  {
-                        imprimirCarton($carton, $bolas);
-                    }
-            echo '</div>';
-
-            //imprime las bolas con los numeros
-
+            // Imprime las bolas con los numeros
             echo '<div style="width: 100%;">';
             foreach($bolas as $valor) {
                 echo '<img src="images/'.($valor).'.png" />';
@@ -144,7 +108,5 @@
             echo '</div>';
         ?>
     </div>
-
-
 </body>
 </html>
