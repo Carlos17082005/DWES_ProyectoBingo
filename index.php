@@ -57,6 +57,12 @@
     <h1>Bingo</h1>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <label>Numero jugador: </label>     
+        <input type="number" name="jugador" required><br></br>
+
+        <label>Numero carton: </label>
+        <input type="number" name="carton" required><br></br>
+        
         <button type="submit" name="inicio">Empezar Juego</button><br>
     </form>
 
