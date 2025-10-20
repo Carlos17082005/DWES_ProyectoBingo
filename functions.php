@@ -120,12 +120,23 @@
         return $carton;
     }
     
-    function cartonesJugador()  {  // Asigna 3 cartones a cada jugador
-        // Devuelve un array con 3 arrays bidimencionales que hacen de cartones de bingo
+    function cartonesJugador($numC)  {  // Asigna n cartones a cada jugador
+        // Resive el numero de cartones para cada jugador
+        // Devuelve un array con n arrays bidimencionales que hacen de cartones de bingo
         $cartones = array();
-        for($i = 1; $i < 4; $i++)  {
+        for($i = 1; $i <= $numC; $i++)  {
             $cartones['carton '.$i] = carton();
         }
         return $cartones;
+    }
+
+    function crearJugadores($numJ, $numC)  {  // Crea un array asosiativo que guarda los cartones de todos los jugadores
+        // Resibe el numero de jugadores que hay que crear y con cuantos cartones 
+        // Devuelve un array con los jugadores
+        $jugadores = array();
+        for($i = 1; $i <= $numJ; $i++)  {
+            $jugadores['Jugador '.$i] = cartonesJugador($numC);
+        }
+        return $jugadores;
     }
 ?>

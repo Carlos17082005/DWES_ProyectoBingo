@@ -57,11 +57,11 @@
     <h1>Bingo</h1>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-        <label>Numero jugador: </label>     
-        <input type="number" name="jugador" required><br></br>
+        <label>Numero jugadores: </label>
+        <input type="number" name="jugador" min="0" required><br></br>
 
-        <label>Numero carton: </label>
-        <input type="number" name="carton" required><br></br>
+        <label>Numero cartones: </label>
+        <input type="number" name="carton" min="0" required><br></br>
         
         <button type="submit" name="inicio">Empezar Juego</button><br>
     </form>
@@ -71,14 +71,8 @@
             include 'functions.php'; // Permite usar funciones de otro fichero PHP
             $bolas = array();  // Crea el array que va a guardar las bolas que vayan saliendo
 
-            $jugadores = array(  // Crea un array asosiativo que guarda los cartones de todos los jugadores
-                'Jugador 1' => cartonesJugador(),
-                'Jugador 2' => cartonesJugador(),
-                'Jugador 3' => cartonesJugador(),
-                'Jugador 4' => cartonesJugador()
-            );
-
             if ($_SERVER["REQUEST_METHOD"] == "POST") {  // Se ejecuta al pulsar el boton
+                $jugadores = crearJugadores($_POST['jugador'], $_POST['carton']);
                 $bool = false;
                 $text = "Ganador: ";  //Aqui se guardara la informacion del ganador
                 while(!$bool)  {  // Ejecuta el bucle hasta que haya un ganador, cuando detecta un ganador lo imprime y verifica los otros por si hay otro ganador
@@ -95,23 +89,23 @@
                     }
                 }
                 echo "<h2>".$text."</h2>";  // Imprime el ganador
-            }
 
-            // Imprime los cartones de los jugadores 
-            foreach($jugadores as $claveJ => $jugador)  {
-                    echo '<div class="jugador"><p>'.$claveJ.'</p>';
-                    foreach($jugador as $carton)  {
-                        imprimirCarton($carton, $bolas);
-                    }
-                    echo '</div>';
-            }
+                // Imprime los cartones de los jugadores 
+                foreach($jugadores as $claveJ => $jugador)  {
+                        echo '<div class="jugador"><p>'.$claveJ.'</p>';
+                        foreach($jugador as $carton)  {
+                            imprimirCarton($carton, $bolas);
+                        }
+                        echo '</div>';
+                }
 
-            // Imprime las bolas con los numeros
-            echo '<div style="width: 100%;">';
-            foreach($bolas as $valor) {
-                echo '<img src="images/'.($valor).'.png" />';
+                // Imprime las bolas con los numeros
+                echo '<div style="width: 100%;">';
+                foreach($bolas as $valor) {
+                    echo '<img src="images/'.($valor).'.png" />';
+                }
+                echo '</div>';
             }
-            echo '</div>';
         ?>
     </div>
 </body>
